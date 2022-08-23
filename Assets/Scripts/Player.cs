@@ -8,8 +8,8 @@ public class Player : MonoBehaviour
     private Collider2D _collider;
     private LayerMask _platformLayerMask;
 
-    [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private float jumpForce = 5f;
+    [SerializeField] private float moveSpeed;
+    [SerializeField] private float jumpForce;
 
     private void Start()
     {
