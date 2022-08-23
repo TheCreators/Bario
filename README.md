@@ -1,2 +1,2 @@
 # Bario
-Game about Mario's son
+Game about Mario's son.
