@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour
     private float _currentMoveSpeed;
     private float _currentJumpForce;
 
-    private float _movementSlowing = 2;
+    private float _movementSlowing = 1;
 
     // Start is called before the first frame update
     void Start()
