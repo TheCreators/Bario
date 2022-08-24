@@ -5,17 +5,15 @@ public class Player : MonoBehaviour
 {
     private Rigidbody2D _rigidBody;
     private Vector2 _moveInput;
-    private Collider2D _collider;
-    private LayerMask _platformLayerMask;
+    private Legs _legs;
 
-    [SerializeField] private float moveSpeed;
-    [SerializeField] private float jumpForce;
+    [SerializeField] private float _moveSpeed;
+    [SerializeField] private float _jumpForce;
 
     private void Start()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
-        _collider = GetComponent<Collider2D>();
-        _platformLayerMask = LayerMask.GetMask(Layers.Platform);
+        _legs = GetComponentInChildren<Legs>();
     }
 
     private void Update()
@@ -25,7 +23,7 @@ public class Player : MonoBehaviour
 
     private void TryMove()
     {
-        var velocity = new Vector2(_moveInput.x * moveSpeed, _rigidBody.velocity.y);
+        var velocity = new Vector2(_moveInput.x * _moveSpeed, _rigidBody.velocity.y);
         _rigidBody.velocity = velocity;
     }
 
@@ -37,9 +35,9 @@ public class Player : MonoBehaviour
 
     private void OnJump(InputValue value)
     {
-        if (value.isPressed is false || _collider.IsTouchingLayers(_platformLayerMask) is false) return;
-        
-        var velocity = new Vector2(0, jumpForce);
+        if (value.isPressed is false || _legs.IsTouchingGround is false) return;
+
+        var velocity = new Vector2(0, _jumpForce);
         _rigidBody.velocity = velocity;
     }
 }
