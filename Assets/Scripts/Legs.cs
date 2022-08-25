@@ -9,7 +9,7 @@ public class Legs : MonoBehaviour
         IsTouchingGround = true;
     }
 
-    private void OnCollisionExit2D(Collision2D otherCollider)
+    private void OnCollisionExit2D(Collision2D collision)
     {
         IsTouchingGround = false;
     }
