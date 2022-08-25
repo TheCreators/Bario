@@ -1,6 +1,5 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
+using Enums;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -9,65 +8,72 @@ public class Enemy : MonoBehaviour
     private Legs _legs;
     private Arms _arms;
 
-    [SerializeField] private int moveDirection;
-    [SerializeField] private float baseMoveSpeed;
-    [SerializeField] private float baseJumpForce;
-    [SerializeField] private float _movementSlowing;
-    private float _currentMoveSpeed;
-    private float _currentJumpForce;
-    // Start is called before the first frame update
-    void Start()
+    [Header("Jumping")] 
+    [SerializeField] private HorizontalDirection _jumpDirection;
+    [SerializeField] private float _jumpBaseHorizontalForce;
+    [SerializeField] private float _jumpBaseVerticalForce;
+    [SerializeField] private float _jumpMinimalVerticalForce;
+    [SerializeField] private float _jumpVerticalForceReducing;
+    [SerializeField] private float _jumpHorizontalForceReducing;
+    [SerializeField] private float _delayBetweenJumpsSeries;
+
+    private float _jumpCurrentVerticalForce;
+    private float _jumpCurrentHorizontalForce;
+
+    private void Start()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
         _legs = GetComponentInChildren<Legs>();
         _arms = GetComponentInChildren<Arms>();
-        _currentJumpForce = baseJumpForce;
-        _currentMoveSpeed = baseMoveSpeed;
+        _jumpCurrentVerticalForce = _jumpBaseVerticalForce;
+        _jumpCurrentHorizontalForce = _jumpBaseHorizontalForce;
+    }
+    
+    private void Update()
+    {
+        TryJump();
+        TryChangeDirection();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void TryJump()
     {
-        Move();
-        CollisionsChecking();
+        if (_legs.IsTouchingGround is false) return;
+        
+        var velocity = new Vector2(_jumpCurrentHorizontalForce * (int) _jumpDirection, _jumpCurrentVerticalForce);
+        _rigidBody.velocity = velocity;
+        
+        ChangeSpeed();
     }
+    
+    private bool JumpsSeriesFinished => _jumpCurrentVerticalForce < _jumpMinimalVerticalForce;
 
-    void Move()
+    private void ChangeSpeed()
     {
-        if (!_legs.IsTouchingGround)
+        if (JumpsSeriesFinished)
         {
+            StartCoroutine(PauseMovement(_delayBetweenJumpsSeries));
             return;
         }
         
-        var velocity = new Vector2(_currentMoveSpeed * moveDirection, _currentJumpForce);
-        _rigidBody.velocity = velocity;
+        _jumpCurrentVerticalForce -= _jumpVerticalForceReducing;
+        _jumpCurrentHorizontalForce -= _jumpHorizontalForceReducing;
+    }
+    
+    private IEnumerator PauseMovement(float seconds)
+    {
+        _jumpCurrentHorizontalForce = 0;
+        _jumpCurrentVerticalForce = 0;
+        yield return new WaitForSeconds(seconds);
+        _jumpCurrentHorizontalForce = _jumpBaseHorizontalForce;
+        _jumpCurrentVerticalForce = _jumpBaseVerticalForce;
     }
 
-    void CollisionsChecking()
+    private void TryChangeDirection()
     {
-        if (_legs.IsTouchingGround)
-        {
-            _currentJumpForce -= _movementSlowing;
-            _currentMoveSpeed -= _movementSlowing;
-            if (_currentJumpForce < 1)
-            {
-                StartCoroutine(DisableMove());
-            }
-        }
-        
-        if (_arms.IsTouchingSomething)
-        {
-            moveDirection = -moveDirection;
-            _arms.IsTouchingSomething = false;
-        }
-    }
+        if (_arms.IsTouchingSomething is false) return;
 
-    IEnumerator DisableMove()
-    {
-        _currentMoveSpeed = 0;
-        _currentJumpForce = 0;
-        yield return new WaitForSeconds(1);
-        _currentMoveSpeed = baseMoveSpeed;
-        _currentJumpForce = baseJumpForce;
+        _jumpDirection = _jumpDirection == HorizontalDirection.Left ? HorizontalDirection.Right : HorizontalDirection.Left;
+
+        _arms.IsTouchingSomething = false;
     }
 }

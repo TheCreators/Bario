@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4387293875960113288}
   - component: {fileID: 4387293875960113295}
   - component: {fileID: 4387293875960113294}
-  - component: {fileID: 4387293875960113293}
+  - component: {fileID: 8701891030985856003}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Untagged
@@ -109,7 +109,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &4387293875960113294
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -136,7 +136,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &4387293875960113293
+--- !u!114 &8701891030985856003
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -148,10 +148,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b577d33a62b494241b9eaa27d2aba3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveDirection: 1
-  baseMoveSpeed: 6
-  baseJumpForce: 6
-  _movementSlowing: 1
+  _jumpDirection: 1
+  _jumpBaseHorizontalForce: 6
+  _jumpBaseVerticalForce: 6
+  _jumpMinimalVerticalForce: 1
+  _jumpVerticalForceReducing: 1
+  _jumpHorizontalForceReducing: 1
+  _delayBetweenJumpsSeries: 1
 --- !u!1 &4387293876667162107
 GameObject:
   m_ObjectHideFlags: 0
