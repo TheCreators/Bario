@@ -2,10 +2,11 @@ using System.Collections;
 using Enums;
 using UnityEngine;
 
+[RequireComponent(typeof(JumpPermission))]
 public class Enemy : MonoBehaviour
 {
+    private JumpPermission _jumpPermission;
     private Rigidbody2D _rigidBody;
-    private Legs _legs;
     private Arms _arms;
 
     [Header("Jumping")] 
@@ -23,7 +24,7 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
-        _legs = GetComponentInChildren<Legs>();
+        _jumpPermission = GetComponent<JumpPermission>();
         _arms = GetComponentInChildren<Arms>();
         _jumpCurrentVerticalForce = _jumpBaseVerticalForce;
         _jumpCurrentHorizontalForce = _jumpBaseHorizontalForce;
@@ -37,7 +38,7 @@ public class Enemy : MonoBehaviour
 
     private void TryJump()
     {
-        if (_legs.IsTouchingGround is false) return;
+        if (_jumpPermission.AllowedToJump is false) return;
         
         var velocity = new Vector2(_jumpCurrentHorizontalForce * (int) _jumpDirection, _jumpCurrentVerticalForce);
         _rigidBody.velocity = velocity;
