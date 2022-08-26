@@ -1,11 +1,15 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.Mathf;
 
 public class Player : MonoBehaviour
 {
     private Rigidbody2D _rigidBody;
     private Vector2 _moveInput;
-    private Legs _legs;
+    private RaycastHit2D _raycastHit;
+
+    private float _distanceFromGround;
+    private float _allowedDistanceToJump = 1.3f;
 
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _jumpForce;
@@ -13,11 +17,15 @@ public class Player : MonoBehaviour
     private void Start()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
-        _legs = GetComponentInChildren<Legs>();
     }
 
     private void Update()
     {
+        _raycastHit = Physics2D.Raycast(_rigidBody.position, Vector2.down);
+        if (_raycastHit.collider != null)
+        {
+            _distanceFromGround = _raycastHit.distance;
+        }
         TryMove();
     }
 
@@ -35,7 +43,7 @@ public class Player : MonoBehaviour
 
     private void OnJump(InputValue value)
     {
-        if (value.isPressed is false || _legs.IsTouchingGround is false) return;
+        if (_distanceFromGround > _allowedDistanceToJump) return;
 
         var velocity = new Vector2(0, _jumpForce);
         _rigidBody.velocity = velocity;
