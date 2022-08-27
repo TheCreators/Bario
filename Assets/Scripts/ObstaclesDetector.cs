@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -9,7 +10,7 @@ public class ObstaclesDetector : MonoBehaviour
     private const float DistanceFromObstacleToTurnAround = 0.1f;
     private Rigidbody2D _rigidbody;
 
-    void Start()
+    private void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
     }
@@ -23,14 +24,18 @@ public class ObstaclesDetector : MonoBehaviour
         distance = 0;
 
         var position = _rigidbody.position;
-        var rightVector = new Vector2(position.x + transform.localScale.x * _collider.size.y / 2, position.y);
-        var leftVector = new Vector2(position.x - transform.localScale.x * _collider.size.y / 2, position.y);
+        var localScale = transform.localScale;
+        var colliderSize = _collider.size;
+
+        var leftVector = new Vector2(position.x - localScale.x * colliderSize.y / 2, position.y);
+        var rightVector = new Vector2(position.x + localScale.x * colliderSize.y / 2, position.y);
+
         var leftRaycastHit = Physics2D.Raycast(leftVector, Vector2.left);
         var rightRaycastHit = Physics2D.Raycast(rightVector, Vector2.right);
 
-        if (leftRaycastHit.collider == null && rightRaycastHit) return false;
+        if (leftRaycastHit.collider == null || rightRaycastHit.collider == null) return false;
 
-        distance = leftRaycastHit.distance > rightRaycastHit.distance ? rightRaycastHit.distance : leftRaycastHit.distance;
+        distance = Math.Min(leftRaycastHit.distance, rightRaycastHit.distance);
         return true;
     }
 }
