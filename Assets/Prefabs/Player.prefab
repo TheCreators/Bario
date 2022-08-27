@@ -162,8 +162,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9b6e69f05995744f93e126165812413, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rigidbody: {fileID: 4210640349995021438}
   _allowedDistanceFromGroundToJump: 1.3
+  _collider: {fileID: 4210640349995021439}
 --- !u!114 &4210640349995021434
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9b6e69f05995744f93e126165812413, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _allowedDistanceFromGroundToJump: 0
+  _collider: {fileID: 4387293875960113294}
 --- !u!1 &4387293877782855154
 GameObject:
   m_ObjectHideFlags: 0
