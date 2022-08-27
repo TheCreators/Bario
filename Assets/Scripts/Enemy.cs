@@ -38,9 +38,9 @@ public class Enemy : MonoBehaviour
 
     private void TryJump()
     {
-        TryChangeDirection();
-        if (_jumpPermission.AllowedToJump is false) return;
         
+        if (_jumpPermission.AllowedToJump is false) return;
+        TryChangeDirection();TryChangeDirection();TryChangeDirection();
         var velocity = new Vector2(_jumpCurrentHorizontalForce * (int) _jumpDirection, _jumpCurrentVerticalForce);
         _rigidBody.velocity = velocity;
         
