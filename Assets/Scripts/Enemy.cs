@@ -38,9 +38,10 @@ public class Enemy : MonoBehaviour
 
     private void TryJump()
     {
-        
         if (_jumpPermission.AllowedToJump is false) return;
+        
         TryChangeDirection();
+        
         var velocity = new Vector2(_jumpCurrentHorizontalForce * (int) _jumpDirection, _jumpCurrentVerticalForce);
         _rigidBody.velocity = velocity;
         
@@ -75,6 +76,5 @@ public class Enemy : MonoBehaviour
         if (_obstaclesDetector.NecessityToTurnAround is false) return;
 
         _jumpDirection = _jumpDirection == HorizontalDirection.Left ? HorizontalDirection.Right : HorizontalDirection.Left;
-        
     }
 }
