@@ -3,11 +3,12 @@ using Enums;
 using UnityEngine;
 
 [RequireComponent(typeof(JumpPermission))]
+[RequireComponent(typeof(ObstaclesDetector))]
 public class Enemy : MonoBehaviour
 {
     private JumpPermission _jumpPermission;
+    private ObstaclesDetector _obstaclesDetector;
     private Rigidbody2D _rigidBody;
-    private Arms _arms;
 
     [Header("Jumping")] 
     [SerializeField] private HorizontalDirection _jumpDirection;
@@ -25,7 +26,7 @@ public class Enemy : MonoBehaviour
     {
         _rigidBody = GetComponent<Rigidbody2D>();
         _jumpPermission = GetComponent<JumpPermission>();
-        _arms = GetComponentInChildren<Arms>();
+        _obstaclesDetector = GetComponent<ObstaclesDetector>();
         _jumpCurrentVerticalForce = _jumpBaseVerticalForce;
         _jumpCurrentHorizontalForce = _jumpBaseHorizontalForce;
     }
@@ -33,11 +34,11 @@ public class Enemy : MonoBehaviour
     private void Update()
     {
         TryJump();
-        TryChangeDirection();
     }
 
     private void TryJump()
     {
+        TryChangeDirection();
         if (_jumpPermission.AllowedToJump is false) return;
         
         var velocity = new Vector2(_jumpCurrentHorizontalForce * (int) _jumpDirection, _jumpCurrentVerticalForce);
@@ -71,10 +72,9 @@ public class Enemy : MonoBehaviour
 
     private void TryChangeDirection()
     {
-        if (_arms.IsTouchingSomething is false) return;
+        if (_obstaclesDetector.NecessityToTurnAround is false) return;
 
         _jumpDirection = _jumpDirection == HorizontalDirection.Left ? HorizontalDirection.Right : HorizontalDirection.Left;
-
-        _arms.IsTouchingSomething = false;
+        
     }
 }
