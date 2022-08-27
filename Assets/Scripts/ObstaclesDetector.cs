@@ -33,7 +33,7 @@ public class ObstaclesDetector : MonoBehaviour
         var leftRaycastHit = Physics2D.Raycast(leftVector, Vector2.left);
         var rightRaycastHit = Physics2D.Raycast(rightVector, Vector2.right);
 
-        if (leftRaycastHit.collider == null || rightRaycastHit.collider == null) return false;
+        if (leftRaycastHit.collider == null && rightRaycastHit.collider == null) return false;
 
         distance = Math.Min(leftRaycastHit.distance, rightRaycastHit.distance);
         return true;
