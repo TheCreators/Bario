@@ -154,7 +154,7 @@ MonoBehaviour:
   _jumpMinimalVerticalForce: 1
   _jumpVerticalForceReducing: 1
   _jumpHorizontalForceReducing: 1
-  _delayBetweenJumpsSeries: 1
+  _delayBetweenJumpsSeries: 2
 --- !u!114 &2762277635542741604
 MonoBehaviour:
   m_ObjectHideFlags: 0
