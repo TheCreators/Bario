@@ -29,6 +29,5 @@ public class JumpPermission : MonoBehaviour
 
         distance = raycastHit.distance;
         return true;
-
     }
 }
