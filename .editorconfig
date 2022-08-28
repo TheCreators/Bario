@@ -1,0 +1,13 @@
+[*.cs]
+
+# Remove unused member declaration
+dotnet_diagnostic.rcs1213.severity = none
+
+# Simplify boolean comparison
+dotnet_diagnostic.rcs1049.severity = none
+
+# Declare type inside namespace
+dotnet_diagnostic.rcs1110.severity = none
+
+# Remove trailing white-space
+dotnet_diagnostic.rcs1037.severity = none
