@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
     private ObstaclesDetector _obstaclesDetector;
     private Rigidbody2D _rigidBody;
 
-    [Header("Jumping")] 
+    [Header("Jumping")]
     [SerializeField] private HorizontalDirection _jumpDirection;
     [SerializeField] private float _jumpBaseHorizontalForce;
     [SerializeField] private float _jumpBaseVerticalForce;
@@ -30,7 +30,7 @@ public class Enemy : MonoBehaviour
         _jumpCurrentVerticalForce = _jumpBaseVerticalForce;
         _jumpCurrentHorizontalForce = _jumpBaseHorizontalForce;
     }
-    
+
     private void Update()
     {
         TryJump();
@@ -39,15 +39,15 @@ public class Enemy : MonoBehaviour
     private void TryJump()
     {
         if (_jumpPermission.AllowedToJump is false) return;
-        
+
         TryChangeDirection();
-        
-        var velocity = new Vector2(_jumpCurrentHorizontalForce * (int) _jumpDirection, _jumpCurrentVerticalForce);
+
+        var velocity = new Vector2(_jumpCurrentHorizontalForce * (int)_jumpDirection, _jumpCurrentVerticalForce);
         _rigidBody.velocity = velocity;
-        
+
         ChangeSpeed();
     }
-    
+
     private bool JumpsSeriesFinished => _jumpCurrentVerticalForce < _jumpMinimalVerticalForce;
 
     private void ChangeSpeed()
@@ -57,11 +57,11 @@ public class Enemy : MonoBehaviour
             StartCoroutine(PauseMovement(_delayBetweenJumpsSeries));
             return;
         }
-        
+
         _jumpCurrentVerticalForce -= _jumpVerticalForceReducing;
         _jumpCurrentHorizontalForce -= _jumpHorizontalForceReducing;
     }
-    
+
     private IEnumerator PauseMovement(float seconds)
     {
         _jumpCurrentHorizontalForce = 0;
