@@ -16,11 +16,11 @@ public class JumpPermission : MonoBehaviour
 
     public bool AllowedToJump => TryGetDistanceFromGround(out float distanceFromGround)
                                  && distanceFromGround <= AllowedDistanceFromGroundToJump;
-    
+
     private bool TryGetDistanceFromGround(out float distance)
     {
         distance = 0;
-        
+
         var position = _rigidbody.position;
         var vector = new Vector2(position.x, position.y - transform.localScale.y * _collider.size.y / 2);
         var raycastHit = Physics2D.Raycast(vector, Vector2.down);
