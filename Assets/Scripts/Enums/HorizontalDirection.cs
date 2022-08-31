@@ -1,8 +1,7 @@
-﻿namespace Enums
+namespace Enums;
+
+public enum HorizontalDirection
 {
-    public enum HorizontalDirection
-    {
-        Right = 1,
-        Left = -1
-    }
+    Right = 1,
+    Left = -1
 }
