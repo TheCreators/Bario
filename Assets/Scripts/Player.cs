@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
     private void TryJump()
     {
         if (_jumpPermission.AllowedToJump is false || _jumpPressed is false) return;
-        
+
         var velocity = new Vector2(_rigidBody.velocity.x, _jumpForce);
         _rigidBody.velocity = velocity;
     }
