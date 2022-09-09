@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
 {
     private Rigidbody2D _rigidBody;
     private Vector2 _moveInput;
+    private bool _jumpPressed;
     private RaycastHit2D _raycastHit;
     private JumpPermission _jumpPermission;
 
@@ -21,6 +22,7 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         TryMove();
+        TryJump();
     }
 
     private void TryMove()
@@ -29,17 +31,21 @@ public class Player : MonoBehaviour
         _rigidBody.velocity = velocity;
     }
 
+    private void TryJump()
+    {
+        if (_jumpPermission.AllowedToJump is false || _jumpPressed is false) return;
+        
+        var velocity = new Vector2(_rigidBody.velocity.x, _jumpForce);
+        _rigidBody.velocity = velocity;
+    }
+
     private void OnMove(InputValue value)
     {
-        var input = value.Get<Vector2>();
-        _moveInput = input;
+        _moveInput = value.Get<Vector2>();
     }
 
     private void OnJump(InputValue value)
     {
-        if (_jumpPermission.AllowedToJump is false) return;
-
-        var velocity = new Vector2(0, _jumpForce);
-        _rigidBody.velocity = velocity;
+        _jumpPressed = value.isPressed;
     }
 }
