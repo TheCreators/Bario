@@ -42,12 +42,12 @@ public class Enemy : MonoBehaviour
 
         TryChangeDirection();
 
-        var velocity = new Vector2(_jumpCurrentHorizontalForce * (int) _jumpDirection, _jumpCurrentVerticalForce);
+        var velocity = new Vector2(_jumpCurrentHorizontalForce * (int)_jumpDirection, _jumpCurrentVerticalForce);
         _rigidBody.velocity = velocity;
 
         ChangeSpeed();
     }
-    
+
     private void TryChangeDirection()
     {
         if (_obstaclesDetector.NecessityToTurnAround is false) return;
