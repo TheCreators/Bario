@@ -18,7 +18,6 @@ public class ObstaclesDetector : MonoBehaviour
     public bool NecessityToTurnAround => TryGetDistanceFromNearestObstacle(out float distanceFromGround)
                                          && distanceFromGround <= DistanceFromObstacleToTurnAround;
 
-    // Update is called once per frame
     private bool TryGetDistanceFromNearestObstacle(out float distance)
     {
         distance = 0;
