@@ -31,7 +31,7 @@ public class Enemy : MonoBehaviour
         _jumpCurrentHorizontalForce = _jumpBaseHorizontalForce;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         TryJump();
     }
@@ -42,10 +42,17 @@ public class Enemy : MonoBehaviour
 
         TryChangeDirection();
 
-        var velocity = new Vector2(_jumpCurrentHorizontalForce * (int)_jumpDirection, _jumpCurrentVerticalForce);
+        var velocity = new Vector2(_jumpCurrentHorizontalForce * (int) _jumpDirection, _jumpCurrentVerticalForce);
         _rigidBody.velocity = velocity;
 
         ChangeSpeed();
+    }
+    
+    private void TryChangeDirection()
+    {
+        if (_obstaclesDetector.NecessityToTurnAround is false) return;
+
+        _jumpDirection = _jumpDirection == HorizontalDirection.Left ? HorizontalDirection.Right : HorizontalDirection.Left;
     }
 
     private bool JumpsSeriesFinished => _jumpCurrentVerticalForce < _jumpMinimalVerticalForce;
@@ -69,12 +76,5 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(seconds);
         _jumpCurrentHorizontalForce = _jumpBaseHorizontalForce;
         _jumpCurrentVerticalForce = _jumpBaseVerticalForce;
-    }
-
-    private void TryChangeDirection()
-    {
-        if (_obstaclesDetector.NecessityToTurnAround is false) return;
-
-        _jumpDirection = _jumpDirection == HorizontalDirection.Left ? HorizontalDirection.Right : HorizontalDirection.Left;
     }
 }

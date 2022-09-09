@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
         _jumpPermission = GetComponent<JumpPermission>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         TryMove();
     }
