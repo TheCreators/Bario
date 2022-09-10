@@ -27,9 +27,9 @@ public class ParallaxBehavior : MonoBehaviour
     private void MoveObject()
     {
         var delta = _followingTarget.position - _targetPreviousPosition;
-        
+
         if (_disableVerticalParallax is true) delta.y = 0;
-        
+
         _targetPreviousPosition = _followingTarget.position;
         transform.position += delta * _parallaxStrength;
     }
