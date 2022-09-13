@@ -2,12 +2,10 @@ using System.Collections;
 using Enums;
 using UnityEngine;
 
-[RequireComponent(typeof(GroundDetection))]
-[RequireComponent(typeof(ObstaclesDetector))]
+[RequireComponent(typeof(SurfaceDetector))]
 public class Enemy : MonoBehaviour
 {
-    private GroundDetection _groundDetection;
-    private ObstaclesDetector _obstaclesDetector;
+    private SurfaceDetector _surfaceDetector;
     private Rigidbody2D _rigidBody;
 
     [Header("Jumping")]
@@ -25,8 +23,7 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
-        _groundDetection = GetComponent<GroundDetection>();
-        _obstaclesDetector = GetComponent<ObstaclesDetector>();
+        _surfaceDetector = GetComponent<SurfaceDetector>();
         _jumpCurrentVerticalForce = _jumpBaseVerticalForce;
         _jumpCurrentHorizontalForce = _jumpBaseHorizontalForce;
     }
@@ -38,7 +35,7 @@ public class Enemy : MonoBehaviour
 
     private void TryJump()
     {
-        if (_groundDetection.IsGrounded is false) return;
+        if (_surfaceDetector.IsGrounded is false) return;
 
         TryChangeDirection();
 
@@ -50,7 +47,7 @@ public class Enemy : MonoBehaviour
 
     private void TryChangeDirection()
     {
-        if (_obstaclesDetector.NecessityToTurnAround is false) return;
+        if (_surfaceDetector.IsTouchingWall is false) return;
 
         _jumpDirection = _jumpDirection == HorizontalDirection.Left ? HorizontalDirection.Right : HorizontalDirection.Left;
     }
