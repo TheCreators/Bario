@@ -2,11 +2,11 @@ using System.Collections;
 using Enums;
 using UnityEngine;
 
-[RequireComponent(typeof(JumpPermission))]
+[RequireComponent(typeof(GroundDetection))]
 [RequireComponent(typeof(ObstaclesDetector))]
 public class Enemy : MonoBehaviour
 {
-    private JumpPermission _jumpPermission;
+    private GroundDetection _groundDetection;
     private ObstaclesDetector _obstaclesDetector;
     private Rigidbody2D _rigidBody;
 
@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
-        _jumpPermission = GetComponent<JumpPermission>();
+        _groundDetection = GetComponent<GroundDetection>();
         _obstaclesDetector = GetComponent<ObstaclesDetector>();
         _jumpCurrentVerticalForce = _jumpBaseVerticalForce;
         _jumpCurrentHorizontalForce = _jumpBaseHorizontalForce;
@@ -38,7 +38,7 @@ public class Enemy : MonoBehaviour
 
     private void TryJump()
     {
-        if (_jumpPermission.AllowedToJump is false) return;
+        if (_groundDetection.IsGrounded is false) return;
 
         TryChangeDirection();
 
