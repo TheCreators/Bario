@@ -1,14 +1,14 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(JumpPermission))]
+[RequireComponent(typeof(GroundDetection))]
 public class Player : MonoBehaviour
 {
     private Rigidbody2D _rigidBody;
     private Vector2 _moveInput;
     private bool _jumpPressed;
     private RaycastHit2D _raycastHit;
-    private JumpPermission _jumpPermission;
+    private GroundDetection _groundDetection;
 
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _jumpForce;
@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
-        _jumpPermission = GetComponent<JumpPermission>();
+        _groundDetection = GetComponent<GroundDetection>();
     }
 
     private void FixedUpdate()
@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
 
     private void TryJump()
     {
-        if (_jumpPermission.AllowedToJump is false || _jumpPressed is false) return;
+        if (_jumpPressed is false || _groundDetection.IsGrounded is false) return;
 
         var velocity = new Vector2(_rigidBody.velocity.x, _jumpForce);
         _rigidBody.velocity = velocity;
