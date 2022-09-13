@@ -92,9 +92,9 @@ MonoBehaviour:
   _collider: {fileID: 383797345}
   _groundDetectionBoxOffset: 0.1
   _wallDetectionBoxOffset: 0.1
-  _drawColliderBox: 1
-  _drawGroundDetectionBox: 1
-  _drawWallDetectionBox: 1
+  _drawColliderBox: 0
+  _drawGroundDetectionBox: 0
+  _drawWallDetectionBox: 0
   _colliderColor: {r: 1, g: 1, b: 1, a: 1}
   _touchingColor: {r: 0, g: 1, b: 0, a: 1}
   _notTouchingColor: {r: 1, g: 0, b: 0, a: 1}
