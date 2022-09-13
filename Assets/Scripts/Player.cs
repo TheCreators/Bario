@@ -1,14 +1,14 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(GroundDetection))]
+[RequireComponent(typeof(SurfaceDetector))]
 public class Player : MonoBehaviour
 {
     private Rigidbody2D _rigidBody;
     private Vector2 _moveInput;
     private bool _jumpPressed;
     private RaycastHit2D _raycastHit;
-    private GroundDetection _groundDetection;
+    private SurfaceDetector _surfaceDetector;
 
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _jumpForce;
@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
-        _groundDetection = GetComponent<GroundDetection>();
+        _surfaceDetector = GetComponent<SurfaceDetector>();
     }
 
     private void FixedUpdate()
@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
 
     private void TryJump()
     {
-        if (_jumpPressed is false || _groundDetection.IsGrounded is false) return;
+        if (_jumpPressed is false || _surfaceDetector.IsGrounded is false) return;
 
         var velocity = new Vector2(_rigidBody.velocity.x, _jumpForce);
         _rigidBody.velocity = velocity;
