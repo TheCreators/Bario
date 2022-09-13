@@ -17,17 +17,17 @@ public class GroundDetection : MonoBehaviour
             return raycastHit.collider != null;
         }
     }
-    
+
     private void OnDrawGizmos()
     {
         if (_drawGizmos is false) return;
-        
+
         var bounds = _collider.bounds;
-        
+
         // Draw ground detection box
         Gizmos.color = IsGrounded ? Color.green : Color.red;
         Gizmos.DrawWireCube(new Vector3(bounds.center.x, bounds.center.y - AllowedDistanceFromGroundToJump, bounds.center.z), bounds.size);
-        
+
         // Draw collider bounds box
         Gizmos.color = Color.white;
         Gizmos.DrawWireCube(new Vector3(bounds.center.x, bounds.center.y, bounds.center.z), bounds.size);
